@@ -1,2 +1,0 @@
-# MLT
-Marginal Linear Transformation
