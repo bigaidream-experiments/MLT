@@ -7,7 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Define parameters.')
 
-parser.add_argument('--n_epoch', type=int, default=10)
+parser.add_argument('--n_epoch', type=int, default=100)
 parser.add_argument('--n_batch', type=int, default=64)
 parser.add_argument('--n_img_row', type=int, default=28)
 parser.add_argument('--n_img_col', type=int, default=28)
@@ -39,18 +39,18 @@ class CNNEnv:
     def __init__(self):
 
         # The data, shuffled and split between train and test sets
-        #self.x_train, self.y_train, self.x_test, self.y_test = tl.files.load_cifar10_dataset(shape=(-1, 32, 32, 3), plotable=False)
+        self.x_train, self.y_train, self.x_test, self.y_test = tl.files.load_cifar10_dataset(shape=(-1, 32, 32, 3), plotable=False)
 
-	train_data = unpickle('./cifar-100-python/train')
-	train_data_num = len(train_data['fine_labels'])
-	self.x_train = np.array(train_data['data'],dtype=np.float32).reshape((train_data_num,3,32,32)).transpose((0,2,3,1))
-	self.y_train = np.array(train_data['fine_labels'],dtype=np.int64)
-	test_data = unpickle('./cifar-100-python/test')
-	test_data_num = len(test_data['fine_labels'])
-	self.x_test = np.array(test_data['data'],dtype=np.float32).reshape((test_data_num,3,32,32)).transpose((0,2,3,1))
-	self.y_test = np.array(test_data['fine_labels'],dtype=np.int64)
-        #self.x_train = tl.prepro.threading_data(self.x_train[:], distort_img)
-        #self.x_test = tl.prepro.threading_data(self.x_test[:], distort_img)
+	# train_data = unpickle('./cifar-100-python/train')
+	# train_data_num = len(train_data['fine_labels'])
+	# self.x_train = np.array(train_data['data'],dtype=np.float32).reshape((train_data_num,3,32,32)).transpose((0,2,3,1))
+	# self.y_train = np.array(train_data['fine_labels'],dtype=np.int64)
+	# test_data = unpickle('./cifar-100-python/test')
+	# test_data_num = len(test_data['fine_labels'])
+	# self.x_test = np.array(test_data['data'],dtype=np.float32).reshape((test_data_num,3,32,32)).transpose((0,2,3,1))
+	# self.y_test = np.array(test_data['fine_labels'],dtype=np.int64)
+        self.x_train = tl.prepro.threading_data(self.x_train[:], distort_img)
+        self.x_test = tl.prepro.threading_data(self.x_test[:], distort_img)
 
 
 

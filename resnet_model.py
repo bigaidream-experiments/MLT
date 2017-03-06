@@ -123,7 +123,7 @@ class ResNet(object):
 
         with tf.variable_scope('costs'):
             xent = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                logits, self.labels)
+                logits = logits, labels = self.labels)
             self.cost = tf.reduce_mean(xent, name='xent')
             self.cost += self._decay()
 
@@ -285,7 +285,7 @@ class ResNet(object):
                 costs.append(tf.nn.l2_loss(var))
                 # tf.histogram_summary(var.op.name, var)
 
-        return tf.mul(self.hps.weight_decay_rate, tf.add_n(costs))
+        return tf.scalar_mul(self.hps.weight_decay_rate, tf.add_n(costs))
 
     def _conv(self, name, x, filter_size, in_filters, out_filters, strides):
         """Convolution."""
